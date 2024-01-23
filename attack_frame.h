@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <pcap.h>
 
 typedef struct{
     uint8_t header_revision;
@@ -18,7 +19,7 @@ typedef struct{
     uint16_t rx_flags;
     uint8_t antenna_signal2;
     uint8_t antenna;
-}Radiotap_Header;
+}Radiotap_Header;//24
 
 typedef struct{
     uint16_t frame_control_field;
@@ -26,13 +27,13 @@ typedef struct{
     
     uint8_t destination_address[6];
     uint8_t source_address[6];
-    uint8_t bss_id[6];
+    uint8_t bss_id[6]; 
 
     uint16_t fragment_sequence;
-}Deauthentication_Main_Frame;
+}Deauthentication_Main_Frame; // 24
 
 typedef struct{
-    uint16_t reason_code;
+    uint16_t reason_code; // 2
 }Wireless_Management;
 
 // 최종프레임
@@ -40,4 +41,7 @@ typedef struct{
     Radiotap_Header radiotap_header;
     Deauthentication_Main_Frame deauthentication_main_frame;
     Wireless_Management wireless_management;
-}Deauthentication_Frame;
+} __attribute__((packed)) Deauthentication_Frame;
+
+void send_packet(Deauthentication_Frame frame, pcap_t *handle);
+void send_deauth_broadcast(Deauthentication_Frame frame, pcap_t *handle, char * argv[]);
