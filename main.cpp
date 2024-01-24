@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
     printf("%d\n", sizeof(Deauthentication_Frame));
     fill_frame(frame);
 
-    
-
     switch(chosen)
     {
         case 1:
@@ -35,6 +33,7 @@ int main(int argc, char *argv[])
             return 0;
 
         case 3:
+            send_deauth_to_bidirection(frame, handle, argv);
             return 0;
 
         case 4:

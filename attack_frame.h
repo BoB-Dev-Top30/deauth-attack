@@ -45,3 +45,4 @@ typedef struct{
 
 void send_packet(Deauthentication_Frame frame, pcap_t *handle);
 void send_deauth_broadcast(Deauthentication_Frame frame, pcap_t *handle, char * argv[]);
+void send_deauth_to_bidirection(Deauthentication_Frame frame, pcap_t *handle, char *argv[]);
