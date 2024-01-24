@@ -18,10 +18,8 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Couldn't open device %s: %s\n", argv[1], errbuf);
         return 2;
     }
-
-    Deauthentication_Frame frame = {0};
-    printf("%d\n", sizeof(Deauthentication_Frame));
-    fill_frame(frame);
+    Deauthentication_Frame deauth_frame = {0};
+    Authentication_Frame auth_frame = {0};
 
     switch(chosen)
     {
@@ -29,14 +27,18 @@ int main(int argc, char *argv[])
             return 0;
 
         case 2:
-            send_deauth_broadcast(frame, handle, argv);
+            fill_deauth_frame(deauth_frame);
+            send_deauth_broadcast(deauth_frame, handle, argv);
             return 0;
 
         case 3:
-            send_deauth_to_bidirection(frame, handle, argv);
+            fill_deauth_frame(deauth_frame);
+            send_deauth_to_bidirection(deauth_frame, handle, argv);
             return 0;
 
         case 4:
+            fill_auth_frame(auth_frame);
+            send_auth(auth_frame, handle, argv);
             return 0;
 
         case 5:
