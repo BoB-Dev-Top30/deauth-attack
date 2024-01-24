@@ -69,9 +69,8 @@ void send_deauth_to_bidirection(Deauthentication_Frame frame, pcap_t *handle, ch
     thread_station_to_ap.join();
 }
 
-/*
-void send_auth()
+
+void send_auth(Deauthentication_Frame frame, pcap_t *handle, char *argv[])
 {
 
 }
-*/

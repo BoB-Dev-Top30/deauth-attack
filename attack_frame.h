@@ -34,15 +34,40 @@ typedef struct{
 
 typedef struct{
     uint16_t reason_code; // 2
-}Wireless_Management;
+}Wireless_Management_Deauthentication;
+
+typedef struct{
+    uint16_t authentication_algorithm;
+    uint16_t authentication_seq;
+    uint16_t status_code;
+    uint8_t tag_number1;
+    uint8_t tag_length1;
+    uint8_t oui1[3];
+    uint8_t vender_specific_oui_type1;
+    uint8_t vender_specific_data1[8];
+
+    uint8_t tag_number2;
+    uint8_t tag_length2;
+    uint8_t oui2[3];
+    uint8_t vender_specific_oui_type2;
+    uint8_t vender_specific_data2[7];
+
+}Wireless_Management_Authentication;
 
 // 최종프레임
 typedef struct{
     Radiotap_Header radiotap_header;
     Deauthentication_Main_Frame deauthentication_main_frame;
-    Wireless_Management wireless_management;
+    Wireless_Management_Deauthentication wireless_management;
 } __attribute__((packed)) Deauthentication_Frame;
+
+typedef struct{
+    Radiotap_Header radiotap_header;
+    Deauthentication_Main_Frame deauthentication_main_frame;
+    Wireless_Management_Authentication wireless_management;
+} __attribute__((packed)) Authentication_Frame;
 
 void send_packet(Deauthentication_Frame frame, pcap_t *handle);
 void send_deauth_broadcast(Deauthentication_Frame frame, pcap_t *handle, char * argv[]);
 void send_deauth_to_bidirection(Deauthentication_Frame frame, pcap_t *handle, char *argv[]);
+void send_auth(Deauthentication_Frame frame, pcap_t *handle, char *argv[]);
